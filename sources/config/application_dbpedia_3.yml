@@ -1,0 +1,45 @@
+### Server settings (ServerProperties) ###
+
+server:
+  port: 8080
+  address: localhost
+  sessionTimeout: 30
+  servlet:
+    context-path: /rdf-navigation-tool
+
+#Custom properties
+custom:
+  transformationRulesFile: resources/sqtrl-config/ahp-rules.xml
+  schemaFile: resources/sqtrl-config/transformationRule.xsd
+  maxRuleCost: 5
+  accessMode: Files #Can be Files/Endpoint
+  sparqlEngine: Jena #Can be Jena/Corese
+  itemLink: https://dbpedia.org/page/
+  sparqlEndpoint: http://dbpedia.org/sparql
+  prefixes:
+    dcterms:<http://purl.org/dc/terms/>,
+    dbo:<http://dbpedia.org/ontology/>,
+    dbp:<http://dbpedia.org/property/>,
+    rdfs:<http://www.w3.org/2000/01/rdf-schema#>,
+    dcterms:<http://purl.org/dc/terms/>,
+    rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  pickedProperties:
+    dbo:author,
+    dbo:museum,
+    dbp:movement
+  displayedProperties:
+    dbo:author,
+    dbo:museum,
+    dbp:movement
+  literalDisplayedProperties: rdfs:label
+  dateProperty: dbp:year
+  dateOptions:
+    min: 1920
+    max: 1970
+    initialMin: 1920
+    initialMax: 1970
+    step: 2
+  labels:
+    individual: rdfs:label
+    property: rdfs:label
+    language: en

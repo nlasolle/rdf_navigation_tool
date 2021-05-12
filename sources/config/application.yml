@@ -1,0 +1,44 @@
+### Server settings (ServerProperties) ###
+server:
+  port: 8080
+  address: localhost
+  sessionTimeout: 30
+  servlet:
+    context-path: /rdf-navigation-tool
+
+### Custom properties ###
+custom:
+  initialResource: http://dbpedia.org/resource/The_Hound_of_the_Baskervilles
+  transformationRulesFile: resources/sqtrl-config/dbpedia-rules.xml
+  schemaFile: resources/sqtrl-config/transformationRule.xsd
+  maxRuleCost: 5
+  itemLink: https://dbpedia.org/page/
+  sparqlEndpoint: http://dbpedia.org/sparql
+  prefixes:
+    dcterms:<http://purl.org/dc/terms/>,
+    dbo:<http://dbpedia.org/ontology/>,
+    dbp:<http://dbpedia.org/property/>,
+    rdfs:<http://www.w3.org/2000/01/rdf-schema#>,
+    rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  pickedProperties:
+    dbo:author,
+    dbo:literaryGenre,
+    dbo:publisher
+   # dcterms:subject
+  displayedProperties:
+    dbo:author,
+    dbo:literaryGenre,
+    dbo:language,
+    dcterms:subject
+  literalDisplayedProperties: rdfs:label
+  dateProperty: dbp:releaseDate
+  dateOptions:
+    min: 1800
+    max: 2000
+    initialMin: 1860
+    initialMax: 1870
+    step: 10
+  labels:
+    individual: rdfs:label
+    property: rdfs:label
+    language: en

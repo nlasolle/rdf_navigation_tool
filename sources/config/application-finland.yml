@@ -1,0 +1,50 @@
+### Server settings (ServerProperties) ###
+
+server:
+  port: 8080
+  address: localhost
+  sessionTimeout: 30
+  servlet:
+    context-path: /rdf-navigation-tool
+
+#Custom properties
+custom:
+  transformationRulesFile: resources/sqtrl-config/ahp-rules.xml
+  schemaFile: resources/sqtrl-config/transformationRule.xsd
+  maxRuleCost: 5
+  accessMode: Files #Can be Files/Endpoint
+  sparqlEngine: Jena #Can be Jena/Corese
+  sparqlEndpoint: https://data.nationallibrary.fi/bib/sparql
+  prefixes:
+    schema:<http://schema.org/>,
+    rdfs:<http://www.w3.org/2000/01/rdf-schema#>,
+    dcterms:<http://purl.org/dc/terms/>,
+    bf:<http://id.loc.gov/ontologies/bibframe/>
+  pickedProperties:
+    schema:author,
+    schema:inLanguage,
+    schema:about
+  displayedProperties:
+    schema:author,
+    schema:inLanguage,
+    schema:about
+  literalDisplayedProperties: schema:name
+  dateProperty: schema:datePublished
+  dateOptions:
+    min: 1830
+    max: 1890
+    initialMin: 1840
+    initialMax: 1880
+    step: 2
+  labels:
+    individual: schema:name
+    property: schema:name
+    language: en
+  
+  # Tomcat specifics
+tomcat:
+    accessLogEnabled: false
+    protocolHeader: x-forwarded-proto
+    remoteIpHeader: x-forwarded-for
+    basedir:
+    backgroundProcessorDelay: 30 # secs

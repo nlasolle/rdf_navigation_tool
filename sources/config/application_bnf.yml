@@ -1,0 +1,53 @@
+### Server settings (ServerProperties) ###
+
+server:
+  port: 8080
+  address: localhost
+  sessionTimeout: 30
+  servlet:
+    context-path: /rdf-navigation-tool
+
+#Custom properties
+custom:
+  transformationRulesFile: resources/sqtrl-config/ahp-rules.xml
+  schemaFile: resources/sqtrl-config/transformationRule.xsd
+  maxRuleCost: 5
+  accessMode: Files #Can be Files/Endpoint
+  sparqlEngine: Jena #Can be Jena/Corese
+  sparqlEndpoint: https://data.bnf.fr/sparql
+  prefixes:
+    bnf-onto:<http://data.bnf.fr/ontology/bnf-onto/>,
+    rdarelationships:<http://rdvocab.info/RDARelationshipsWEMI/>,
+    foaf:<http://xmlns.com/foaf/0.1/>,
+    dcterms:<http://purl.org/dc/terms/>,
+    xsd:<http://www.w3.org/2001/XMLSchema#>,
+    rdfs:<http://www.w3.org/2000/01/rdf-schema#>,
+    rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  pickedProperties:
+    dcterms:creator,
+    dcterms:language,
+    dcterms:subject
+  displayedProperties:
+    dcterms:creator,
+    dcterms:language,
+    dcterms:subject
+  literalDisplayedProperties: rdfs:label
+  dateProperty: rdarelationships:dateOfWork
+  dateOptions:
+    min: 1800
+    max: 1850
+    initialMin: 1810
+    initialMax: 1840
+    step: 2
+  labels:
+    individual: rdfs:label
+    property: rdfs:label
+    language: fr
+  
+  # Tomcat specifics
+tomcat:
+    accessLogEnabled: false
+    protocolHeader: x-forwarded-proto
+    remoteIpHeader: x-forwarded-for
+    basedir:
+    backgroundProcessorDelay: 30 # secs

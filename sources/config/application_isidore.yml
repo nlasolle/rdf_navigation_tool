@@ -1,0 +1,50 @@
+### Server settings (ServerProperties) ###
+
+server:
+  port: 8080
+  address: localhost
+  sessionTimeout: 30
+  servlet:
+    context-path: /rdf-navigation-tool
+
+#Custom properties
+custom:
+  transformationRulesFile: resources/sqtrl-config/ahp-rules.xml
+  schemaFile: resources/sqtrl-config/transformationRule.xsd
+  maxRuleCost: 5
+  sparqlEngine: Jena #Can be Jena/Corese
+  sparqlEndpoint: https://isidore.science/sparql
+  prefixes:
+    isidore:<http://www.rechercheisidore.fr/class/>,
+    rdfs:<http://www.w3.org/2000/01/rdf-schema#>,
+    dcterms:<http://purl.org/dc/terms/>,
+    dc:<http://purl.org/dc/elements/1.1/>,
+    rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  pickedProperties:
+    dcterms:creator,
+    dcterms:subject,
+    dcterms:language,
+    dc:type
+  displayedProperties:
+    dcterms:creator,
+    dc:type
+  literalDisplayedProperties:
+    dcterms:subject
+  dateProperty: dcterms:date
+  dateOptions:
+    min: 1960
+    max: 2020
+    initialMin: 1980
+    initialMax: 2010
+  labels:
+    individual: rdfs:label
+    property: rdfs:label
+    language: en
+  
+  # Tomcat specifics
+tomcat:
+    accessLogEnabled: false
+    protocolHeader: x-forwarded-proto
+    remoteIpHeader: x-forwarded-for
+    basedir:
+    backgroundProcessorDelay: 30 # secs
