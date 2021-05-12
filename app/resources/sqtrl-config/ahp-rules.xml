@@ -1,0 +1,135 @@
+<SQTRule>
+
+    <prefixes>
+        <prefix name="schema:" URI="http://schema.org/"></prefix>
+        <prefix name ="gndo:" URI="http://d-nb.info/standards/elementset/gnd#"></prefix>
+		<prefix name ="hp:" URI="http://hpBase/"></prefix>
+		<prefix name ="bio:" URI="ttp://purl.org/vocab/bio/0.1/"></prefix>
+		<prefix name ="rdfs:" URI="http://www.w3.org/2000/01/rdf-schema#"></prefix>
+		<prefix name ="ahpo:" URI="http://e-hp.ahp-numerique.fr/ahpo#"></prefix>
+		<prefix name ="o:" URI="http://omeka.org/s/vocabs/o#"></prefix>
+		<prefix name ="o-time:" URI="http://www.w3.org/2006/time#"></prefix>
+		<prefix name ="dm2e:" URI="http://onto.dm2e.eu/schemas/dm2e/"></prefix>
+		<prefix name ="dctype:" URI="http://purl.org/dc/dcmitype/"></prefix>
+		<prefix name ="rel:" URI="http://purl.org/vocab/relationship/"></prefix>
+		<prefix name ="dcterms:" URI="http://purl.org/dc/terms/"></prefix>
+		<prefix name ="o-cnt:" URI="http://www.w3.org/2011/content#"></prefix>
+		<prefix name ="bibo:" URI="http://purl.org/ontology/bibo/"></prefix>
+		<prefix name ="o-module-mapping:" URI="http://omeka.org/s/vocabs/module/mapping#"></prefix>
+		<prefix name ="foaf:" URI="http://xmlns.com/foaf/0.1/"></prefix>
+		<prefix name ="exif:" URI="http://www.w3.org/2003/12/exif/ns#"></prefix>
+	</prefixes>
+
+	<rules>
+		<rule name="Récupération de valeur">
+			<context>?s ?p ?node . ?node ahpo:hasValue ?o</context>
+			<left>?s ?p ?o</left>
+			<right>?s ?p ?node . ?node ahpo:hasValue ?o</right>
+			<cost>0</cost>
+			<explanation>Adapte le patron de triplet pour tenir compte de la représentationn-aire
+			 et récupérer la valeur associée à la propriété ?p.</explanation>
+		</rule>
+		
+		<rule name="Generalize object class">
+			<context>?C rdfs:subClassOf ?D</context>
+			<left>?x ?p ?C</left>
+			<right>?x ?p ?D</right>
+			<cost>5.0</cost>
+			<explanation>Generalizing ?C in ?D</explanation>
+		</rule>
+
+		<rule name="Generalize subject class">
+			<context>?C rdfs:subClassOf ?D</context>
+			<left>?C ?p ?x</left>
+			<right>?D ?p ?x</right> 
+			<cost>5.0</cost>
+			<explanation>Generalizing ?C in ?D</explanation>
+		</rule>
+
+		<rule name="Generalize predicate">
+			<context>?p rdfs:subPropertyOf ?q</context>
+			<left>?x ?p ?y</left>
+			<right>?x ?q ?y</right>
+			<cost>2.0</cost>
+			<explanation>Generalize ?p in ?q</explanation>
+		</rule>
+
+		
+		<rule name="Switch sender and recipient">
+			<context></context>
+			<left>?l ahpo:sentBy ?x . ?l ahpo:sentTo ?y</left>
+			<right>?l ahpo:sentBy ?y . ?l ahpo:sentTo ?x</right>
+			<cost>2.0</cost>
+			<explanation>Exchange the sender (?x) and the recipient (?y) of letters</explanation>
+		</rule>
+ 		
+ 		<rule name="Suppress triple">
+			<context>?x ?p ?y</context>
+			<left>?x ?p ?y</left>
+			<right></right>
+			<cost>8.0</cost>
+			<explanation>Forgetting triple ?x ?p ?y</explanation>
+		</rule>
+		
+		<rule name="Replace sender by quoted person">
+			<context></context>
+			<left>?l1 ahpo:sentBy ?x . ?l1 ahpo:citeName ?y</left>
+			<right>?l1 ahpo:sentBy ?y</right>
+			<cost>3.0</cost>
+			<explanation>Replacing one of the correspondent by one of the quoted persons</explanation>
+		</rule>
+		
+		<rule name="Replace recipient by quoted person">
+			<context></context>
+			<left>?l1 ahpo:sentTo ?x . ?l1 ahpo:citeName ?y</left>
+			<right>?l1 ahpo:sentTo ?y</right>
+			<cost>3.0</cost>
+			<explanation>Replacing one of the correspondent by one of the quoted persons</explanation>
+		</rule>
+		
+		<rule name="Replace subject">
+			<context>?l2 dcterms:subject ?x . ?l2 dcterms:subject ?y</context>
+			<left>?l1 dcterms:subject ?x</left>
+			<right>?l1 dcterms:subject ?y</right>
+			<cost>3.0</cost>
+			<explanation>Replacing a subject by another related subject</explanation>
+		</rule>
+		
+		<!--
+		
+		<rule name="Replace sender">
+			<context>?l1 dcterms:subject ?s . ?l2 ahpo:correspondent ?y . ?l2 dcterms:subject ?s</context>
+			<left>?l1 ahpo:correspondent ?x</left>
+			<right>?l1 ahpo:correspondent ?y</right>
+			<cost>3.0</cost>
+			<explanation>Replacing the correspondent by another correspondent related to the subject</explanation>
+		</rule>
+		
+		<rule name="Transform correspondent as a quoted person">
+			<context></context>
+			<left>?l1 ahpo:correspondent ?x</left>
+			<right>?l1 ahpo:citeName ?x</right>
+			<cost>3.0</cost>
+			<explanation>Remove the correspondent and place it as one of the quoted persons</explanation>
+		</rule>
+		
+		<rule name="Replace the place of archive">
+			<context>?l1 ahpo:archivedAt ?x . ?l1 ahpo:hasAddress ?a1 . ?a1 ahpo:town ?t1 .
+			?l2 ahpo:archivedAt ?y . ?l2 ahpo:hasAddress ?a2 . ?a2 ahpo:town ?t1</context>
+			<left>?l1 ahpo:archivedAt ?x</left>
+			<right>?l1 ahpo:archivedAt ?y</right>
+			<cost>3.0</cost>
+			<explanation>Replace the place of archive 
+			by another place of archives located in the same city</explanation>
+		</rule>
+		
+		<rule name="Replace subject">
+			<context>?l1 ahpo:archivedAt ?x . ?l1 dcterms:subject ?s1 . ?l2 ahpo:archivedAt ?x . ?l2 dcterms:subject ?s2</context>
+			<left>?l1 dcterms:subject ?s1</left>
+			<right>?l1 dcterms:subject ?s2</right>
+			<cost>2.0</cost>
+			<explanation>Replace the subject by another subject 
+			 of letters archived within the same place</explanation>
+		</rule>-->
+	</rules>
+</SQTRule>

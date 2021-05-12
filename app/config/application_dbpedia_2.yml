@@ -1,0 +1,44 @@
+
+
+server:
+  port: 8080
+  address: localhost
+  sessionTimeout: 30
+  servlet:
+    context-path: /rdf-navigation-tool
+
+#Custom properties
+custom:
+  initialResource: http://dbpedia.org/resource/Man-Child
+  transformationRulesFile: resources/sqtrl-config/ahp-rules.xml
+  schemaFile: resources/sqtrl-config/transformationRule.xsd
+  maxRuleCost: 5
+  itemLink: https://dbpedia.org/page/
+  sparqlEndpoint: http://dbpedia.org/sparql
+  prefixes:
+    dcterms:<http://purl.org/dc/terms/>,
+    dbo:<http://dbpedia.org/ontology/>,
+    dbp:<http://dbpedia.org/property/>,
+    rdfs:<http://www.w3.org/2000/01/rdf-schema#>,
+    dcterms:<http://purl.org/dc/terms/>,
+    rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  pickedProperties:
+    dbp:artist,
+    dbp:genre,
+    dbp:producer
+  displayedProperties:
+    dbp:genre,
+    dbp:artist,
+    dbp:producer
+  literalDisplayedProperties: rdfs:label
+  dateProperty: dbp:released
+  dateOptions:
+    min: 1960
+    max: 2000
+    initialMin: 1970
+    initialMax: 1980
+    step: 2
+  labels:
+    individual: rdfs:label
+    property: rdfs:label
+    language: en

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name = "SQTRule" type="rootElement"/>
+
+<xs:complexType name="rootElement">
+  <xs:sequence>
+       <xs:element name = "prefixes" type="prefixList"  minOccurs ="0" maxOccurs="1"/>
+       <xs:element name= "rules" type="ruleList"  maxOccurs="1"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="prefixList">
+ <xs:sequence>
+   <xs:element name="prefix" type="prefixType"  minOccurs ="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType >
+
+<xs:complexType name="ruleList">
+ <xs:sequence>
+   <xs:element name="rule" type="ruleType"  minOccurs ="1" maxOccurs="unbounded"/>
+   <xs:element name="numericalFilterRule" type="numericalFilterRuleType"  minOccurs ="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType >
+
+<xs:complexType name="prefixType">
+   <xs:attribute name="name" type="xs:string" use="required"/> 
+   <xs:attribute name="URI" type="xs:string" use="required"/> 
+</xs:complexType>
+
+<xs:complexType name="ruleType">
+    <xs:sequence>
+      <xs:element name="context" type="sparqlBody"/>
+      <xs:element name="left" type="leftSparqlBody"/>
+      <xs:element name="right" type="sparqlBody"/>
+      <xs:element name="cost" type="xs:decimal"/>
+      <xs:element name="explanation" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/> 
+ </xs:complexType>
+
+<xs:complexType name="numericalFilterRuleType">
+    <xs:sequence>
+       <xs:element name="lower" type="xs:decimal"/>
+        <xs:element name="higher" type="xs:decimal"/>
+      <xs:element name="cost" type="xs:decimal"/>
+      <xs:element name="explanation" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/> 
+ </xs:complexType>
+
+<xs:simpleType name = "URI">
+   <xs:restriction base="xs:string">
+     <xs:pattern value="http://.*"/>
+   </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="sparqlBody">
+  <xs:restriction base="xs:string">
+    <xs:pattern value="((\??([a-z]|[A-Z]|:|[0-9])+ \??([a-z]|[A-Z]|:|[0-9])+ \??([a-z]|[A-Z]|:|[0-9])+)( ; \??([a-z]|[A-Z]|:|[0-9])* \??([a-z]|[A-Z]|:|[0-9])+| . \??([a-z]|[A-Z]|:|[0-9])+ \??([a-z]|[A-Z]|:|[0-9])+ \??([a-z]|[A-Z]|:|[0-9]))*( (FILTER\(.*\))(\.FILTER\(.*\))*)?)?"/>
+    <xs:whiteSpace value="collapse"> </xs:whiteSpace>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="leftSparqlBody">
+  <xs:restriction base="xs:string">
+    <xs:pattern value="(\??([a-z]|[A-Z]|:|[0-9])+ \??([a-z]|[A-Z]|:|[0-9])+ \??([a-z]|[A-Z]|:|[0-9])+)( ; \??([a-z]|[A-Z]|:|[0-9])* \??([a-z]|[A-Z]|:|[0-9])+| . \??([a-z]|[A-Z]|:|[0-9])+ \??([a-z]|[A-Z]|:|[0-9])+ \??([a-z]|[A-Z]|:|[0-9]))*( (FILTER\(.*\))(\.FILTER\(.*\))*)?"/>
+    <xs:whiteSpace value="collapse"> </xs:whiteSpace>
+  </xs:restriction>
+</xs:simpleType>
+
+
+</xs:schema>
