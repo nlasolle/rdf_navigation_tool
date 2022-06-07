@@ -1,6 +1,6 @@
 ### Server settings (ServerProperties) ###
 server:
-  port: 8080
+  port: 9090
   address: localhost
   sessionTimeout: 30
   servlet:
