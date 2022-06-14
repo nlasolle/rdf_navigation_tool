@@ -1,46 +1,29 @@
-### Server settings (ServerProperties) ###
-
-server:
-  port: 8080
-  address: localhost
-  sessionTimeout: 30
-  servlet:
-    context-path: /rdf-navigation-tool
-
-#Custom properties
-custom:
-  initialResource: http://henripoincare.fr/api/items/5834
-  transformationRulesFile: resources/sqtrl-config/ahp-rules.xml
-  schemaFile: resources/sqtrl-config/transformationRule.xsd
-  maxRuleCost: 5
-  sparqlEndpoint: http://localhost:3030/hp
-  itemLink: http://henripoincare.fr/s/correspondance/item/
-  prefixes:
-    ahpo:<http://e-hp.ahp-numerique.fr/ahpo#>,
-    rdfs:<http://www.w3.org/2000/01/rdf-schema#>,
-    dcterms:<http://purl.org/dc/terms/>,
-    rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-  namespace: http://e-hp.ahp-numerique.fr/ahpo#
-  pickedProperties:
-    ahpo:sentBy,
-    ahpo:sentTo,
-    dcterms:subject,
-    ahpo:writtenAt,
-    ahpo:citeName
-  displayedProperties:
-    ahpo:sentBy,
-    ahpo:sentTo,
-    ahpo:citeName
-  literalDisplayedProperties:
-    dcterms:subject
-  dateProperty: ahpo:writingDate
-  dateOptions:
-    min: 1854
-    max: 1912
-    initialMin: 1880
+custom: 
+  dateOptions: 
     initialMax: 1900
+    initialMin: 1880
+    max: 1912
+    min: 1854
     step: 4
-  labels:
-    individual: dcterms:title
-    property: rdfs:label
+  dateProperty: "ahpo:writingDate"
+  displayedProperties: "ahpo:sentBy, ahpo:sentTo, ahpo:citeName"
+  initialResource: "http://henripoincare.fr/api/items/5834"
+  itemLink: "http://henripoincare.fr/s/correspondance/item/"
+  labels: 
+    individual: "dcterms:title"
     language: en
+    property: "rdfs:label"
+  literalDisplayedProperties: "dcterms:subject"
+  maxRuleCost: 5
+  namespace: "http://e-hp.ahp-numerique.fr/ahpo#"
+  pickedProperties: "ahpo:sentBy, ahpo:sentTo, dcterms:subject, ahpo:writtenAt, ahpo:citeName"
+  prefixes: "ahpo:<http://e-hp.ahp-numerique.fr/ahpo#>, rdfs:<http://www.w3.org/2000/01/rdf-schema#>, dcterms:<http://purl.org/dc/terms/>, rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+  schemaFile: resources/sqtrl-config/transformationRule.xsd
+  sparqlEndpoint: "http://tomcat.henripoincare.fr/fuseki/hp_corpus/sparql/"
+  transformationRulesFile: resources/sqtrl-config/ahp-rules.xml
+server: 
+  address: localhost
+  port: 8080
+  servlet: 
+    context-path: /rdf-navigation-tool
+  sessionTimeout: 30
